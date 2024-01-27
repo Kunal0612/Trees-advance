@@ -1,3 +1,6 @@
+// distance between u and v is depth[u] + depth[v] - 2*LCA(u,v)
+
+
 #include<bits/stdc++.h>
 using namespace std;
 #define SZ 200005
