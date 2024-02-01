@@ -1,0 +1,55 @@
+/*********Jai Shree Ram*****************
+**        Solution by kunal0612       **
+**********Jai Shree Ram****************/
+#include <bits/stdc++.h>
+#define ll long long int
+#define lll unsigned long long
+#define yes cout<<"YES"<<endl;
+#define no cout<<"NO"<<endl;
+#define mod 1000000007
+#define nl "\n"
+using namespace std;
+
+vector<vector<ll>> dir4={{1,0},{0,1},{-1,0},{0,-1}};
+vector<vector<ll>> dir8={{1,0},{0,1},{-1,0},{0,-1},{1,1},{-1,1},{-1,-1},{1,-1}};
+
+
+map<ll,vector<ll>> mp;
+
+ll dfs(ll sc,ll par,vector<ll> &dp){
+    if(mp[sc].size()==0) return 0;
+    for(auto x:mp[sc]){
+        dp[sc]+=(1+dfs(x,sc,dp));
+    }
+    return dp[sc];
+}
+
+void kunal(){
+    ll n;
+    cin>>n;
+    vector<ll> adj(n-1);
+    vector<ll> dp(n+1,0);
+    for(ll i=0;i<n-1;i++) cin>>adj[i];
+    for(ll i=0;i<adj.size();i++){
+        mp[adj[i]].push_back(i+2);
+    }
+    ll ans=dfs(1,0,dp);
+    for(int i=1;i<dp.size();i++){
+        cout<<dp[i]<<" ";
+    }
+    cout<<nl;
+}
+
+
+//cout << fixed << setprecision(10) <<sum;
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    //freopen("input.txt", "r", stdin);
+    //freopen("output.txt", "w", stdout);
+    int t=1;
+    while(t--){
+        kunal();
+    }
+    return 0;
+}
