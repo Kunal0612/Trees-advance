@@ -79,3 +79,85 @@ int main() {
    }
    return 0;
 }
+
+
+
+
+
+
+/*********Jai Shree Ram*****************
+**        Solution by kunal0612       **
+**********Jai Shree Ram****************/
+#include <bits/stdc++.h>
+#define ll long long int
+#define lll unsigned long long
+#define yes cout<<"YES"<<endl;
+#define no cout<<"NO"<<endl;
+#define mod 1000000007
+#define nl "\n"
+using namespace std;
+
+vector<vector<ll>> dir4={{1,0},{0,1},{-1,0},{0,-1}};
+vector<vector<ll>> dir8={{1,0},{0,1},{-1,0},{0,-1},{1,1},{-1,1},{-1,-1},{1,-1}};
+
+int dp[200001][2];
+map<ll,vector<ll>> mp;
+int fn(int sc,int par,int flag){
+    if(dp[sc][flag]!=-1){
+        return dp[sc][flag];
+    }
+    if(flag){
+        int ans=0;
+        for(auto x:mp[sc]){
+            if(x!=par){
+                ans+=fn(x,sc,1);
+            }
+        }
+        int res=0;
+        for(auto x:mp[sc]){
+            if(x!=par){
+                res=max(res,ans-dp[x][1]+1+fn(x,sc,0));
+            }
+        }
+        return dp[sc][flag]=res;
+    }
+    else{
+        int ans=0;
+        for(auto x:mp[sc]){
+            if(x!=par){
+                ans+=max(fn(x,sc,1),fn(x,sc,0));
+            }
+        }
+        return dp[sc][flag]=ans;
+    }
+}
+
+
+
+void kunal(){
+    ll n;
+    cin>>n;
+    for(ll i=0;i<n-1;i++){
+        ll u,v;
+        cin>>u>>v;
+        mp[u].push_back(v);
+        mp[v].push_back(u);
+    }
+    memset(dp,-1,sizeof(dp));
+    ll ans=max(fn(1,0,0),fn(1,0,1));
+    cout<<ans<<nl;
+}
+
+
+//cout << fixed << setprecision(10) <<sum;
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    //freopen("input.txt", "r", stdin);
+    //freopen("output.txt", "w", stdout);
+    int t=1;
+    while(t--){
+        kunal();
+    }
+    return 0;
+}
