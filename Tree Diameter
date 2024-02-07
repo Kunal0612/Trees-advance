@@ -1,0 +1,73 @@
+This is a classical problem having multiple solutions.
+
+One easy to implement solution is using 2 Breadth First Searches (BFS). 
+Start a BFS with a random node and store the last node encountered before search ends. 
+This last node will definitely be one of the ends of the diameter (Why?).
+Now run a second BFS from this node and you will end on the other end of the diameter.
+
+
+
+/*********Jai Shree Ram*****************
+**        Solution by kunal0612       **
+**********Jai Shree Ram****************/
+#include <bits/stdc++.h>
+#define ll long long int
+#define lll unsigned long long
+#define yes cout<<"YES"<<endl;
+#define no cout<<"NO"<<endl;
+#define mod 1000000007
+#define nl "\n"
+#define SZ 200005
+using namespace std;
+
+vector<vector<ll>> dir4={{1,0},{0,1},{-1,0},{0,-1}};
+vector<vector<ll>> dir8={{1,0},{0,1},{-1,0},{0,-1},{1,1},{-1,1},{-1,-1},{1,-1}};
+
+map<ll,vector<ll>> adj;
+
+pair<int,int> bfs(int src)
+{
+	int d = 0;
+	queue<pair<int,int> > q;
+	q.push({src, 0});
+	vector<bool> vis(SZ, false);
+	pair<int,int>  u;
+ 
+	while(!q.empty()) {
+		u = q.front();
+		vis[u.first] = true;
+		q.pop();
+		for(int v: adj[u.first])
+			if(!vis[v])
+			q.push({v, u.second + 1});
+	}
+	return u;
+}
+
+void kunal(){
+  ll n;
+  cin>>n;
+  for(int i = 0; i < n-1; i++) {
+    ll x,y;
+		cin >> x >> y;
+		adj[x].push_back(y);
+		adj[y].push_back(x);
+	}
+	pair<int,int>  end1 = bfs(1);
+	pair<int,int>  end2 = bfs(end1.first);
+	cout << end2.second << endl;
+}
+
+
+//cout << fixed << setprecision(10) <<sum;
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    //freopen("input.txt", "r", stdin);
+    //freopen("output.txt", "w", stdout);
+    int t=1;
+    while(t--){
+        kunal();
+    }
+    return 0;
+}
